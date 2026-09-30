@@ -1,0 +1,31 @@
+# Stack do Portainer (Swarm): site de teste da página de vendas do Kit NR-01 Blindado.
+# Imagem privada no GHCR: o Portainer precisa do registro ghcr.io cadastrado com um token de leitura.
+services:
+  web:
+    image: ghcr.io/eduardodxcosta/siteteste-kit-nr01:${IMAGE_TAG:-latest}
+    networks: [public]
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+        delay: 5s
+      update_config:
+        order: start-first
+      resources:
+        limits:
+          memory: 64M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=EDXCNET"
+        - "traefik.http.routers.sitetestenr01.rule=Host(`siteteste.edxcautomacao.com.br`)"
+        - "traefik.http.routers.sitetestenr01.entrypoints=websecure"
+        - "traefik.http.routers.sitetestenr01.tls=true"
+        - "traefik.http.routers.sitetestenr01.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.sitetestenr01.loadbalancer.server.port=80"
+
+networks:
+  public:
+    external: true
+    name: EDXCNET
