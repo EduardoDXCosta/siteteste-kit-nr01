@@ -14,4 +14,5 @@ Imagem: `ghcr.io/eduardodxcosta/siteteste-kit-nr01` (privada; o Portainer usa o 
 ## Observações
 
 - Endereço de teste: todas as páginas levam "noindex" (meta robots, cabeçalho X-Robots-Tag e robots.txt).
-- O botão de compra continua sem link até existir o checkout.
+- Link de compra: constante `CHECKOUT` no `sincronizar.py` (provisório `https://www.google.com/`). Quando existir o checkout real, trocar só essa linha, rodar o `sincronizar.py` e publicar.
+- Imagem nova na página precisa entrar na lista `IMAGENS` do `sincronizar.py`; se faltar, o script para com erro (o nginx devolveria a página no lugar da imagem, sem aviso).
